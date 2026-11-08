@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Chọn ngày tốt theo tuổi: âm lịch, Can Chi, Hoàng đạo, Thập nhị Trực, xung hợp tuổi." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>Ngày Tốt</title>
+    <script>
+      // Áp dụng giao diện và ngôn ngữ đã lưu trước khi vẽ trang, tránh nháy màu.
+      try {
+        var g = localStorage.getItem('giaoDien')
+        var toi = g === 'toi' || (g !== 'sang' && matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.classList.toggle('dark', toi)
+        var n = localStorage.getItem('ngonNgu')
+        if (n === 'en' || n === 'vi') document.documentElement.lang = n
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

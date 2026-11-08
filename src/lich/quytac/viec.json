@@ -1,0 +1,76 @@
+{
+  "nguon": "Tổng hợp theo quy ước phổ biến của lịch vạn niên Việt Nam (Thập nhị Trực, Hoàng đạo, xung hợp tuổi, Kim Lâu, Hoang Ốc, Tam tai).",
+  "loaiNgay": {
+    "thienKhacDiaXung": true,
+    "xungTuoi": true,
+    "tamNuong": true,
+    "nguyetKy": true
+  },
+  "diem": {
+    "hoangDao": 2,
+    "hacDao": -1,
+    "trucTot": 2,
+    "trucXau": -2,
+    "lucHop": 1,
+    "tamHop": 1,
+    "canHop": 0.5,
+    "lucHai": -1,
+    "lucPha": -1,
+    "tuongHinh": -1,
+    "canXung": -1,
+    "napAm": {
+      "sinh-cho": 1,
+      "hoa": 0.5,
+      "duoc-sinh": 0,
+      "minh-khac": 0,
+      "khac-minh": -1.5
+    },
+    "kimLau": -3,
+    "hoangOc": -2,
+    "tamTai": -1
+  },
+  "viec": [
+    {
+      "id": "mua-vang",
+      "ten": "Mua vàng / cầu tài",
+      "trucTot": ["Mãn", "Định", "Thành", "Thu", "Khai"],
+      "trucXau": ["Phá", "Nguy", "Bế"],
+      "xetNam": []
+    },
+    {
+      "id": "khai-truong",
+      "ten": "Khai trương",
+      "trucTot": ["Mãn", "Thành", "Khai"],
+      "trucXau": ["Phá", "Nguy", "Bế", "Thu"],
+      "xetNam": ["tamTai"]
+    },
+    {
+      "id": "xuat-hanh",
+      "ten": "Xuất hành",
+      "trucTot": ["Kiến", "Mãn", "Thành", "Khai"],
+      "trucXau": ["Phá", "Nguy", "Bế", "Định", "Chấp"],
+      "xetNam": []
+    },
+    {
+      "id": "ky-hop-dong",
+      "ten": "Ký hợp đồng",
+      "trucTot": ["Mãn", "Định", "Thành", "Khai"],
+      "trucXau": ["Phá", "Nguy", "Bế"],
+      "xetNam": []
+    },
+    {
+      "id": "cuoi-hoi",
+      "ten": "Cưới hỏi",
+      "trucTot": ["Định", "Thành", "Khai"],
+      "trucXau": ["Phá", "Nguy", "Bế", "Trừ"],
+      "xetNam": ["kimLauNu", "tamTai"]
+    },
+    {
+      "id": "dong-tho",
+      "ten": "Động thổ / làm nhà",
+      "trucTot": ["Bình", "Định", "Chấp", "Thành", "Khai"],
+      "trucXau": ["Kiến", "Phá", "Nguy", "Bế"],
+      "xetNam": ["kimLau", "hoangOc", "tamTai"]
+    }
+  ]
+}
