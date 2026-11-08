@@ -1,4 +1,4 @@
-import { CAN, CHI, NGU_HANH, tenCanChi, THAN, TRUC, type Ngay, type NgayAm, type NoiDungLyDo, type QuanHeHanh } from '../lich'
+import { CAN, CHI, NGU_HANH, SAO_28, tenCanChi, THAN, TRUC, type Ngay, type NgayAm, type NoiDungLyDo, type QuanHeHanh } from '../lich'
 import type { MucDo } from '../components/dinhdang'
 
 const TEN_VIEC: Record<string, string> = {
@@ -45,7 +45,7 @@ export const vi = {
   ngayTotNhat: (v: string) => `Ngày tốt nhất cho việc ${viec(v).toLowerCase()}`,
   luuY: 'Kết quả chỉ để tham khảo theo phong tục, không phải lời khuyên tài chính hay đầu tư.',
   nguon:
-    'Tổng hợp theo quy ước phổ biến của lịch vạn niên Việt Nam (Thập nhị Trực, Hoàng đạo, xung hợp tuổi, Kim Lâu, Hoang Ốc, Tam tai).',
+    'Tổng hợp theo quy ước phổ biến của lịch vạn niên Việt Nam (Thập nhị Trực, Hoàng đạo, Nhị thập bát tú, Thọ tử, Sát chủ, xung hợp tuổi, Kim Lâu, Hoang Ốc, Tam tai).',
 
   form: {
     ngaySinh: 'Ngày sinh (dương lịch)',
@@ -73,6 +73,8 @@ export const vi = {
     thangNam: 'Tháng / Năm',
     thanTruc: 'Thần trực',
     truc: 'Trực',
+    sao28: 'Nhị thập bát tú',
+    loaiSao: { kiet: 'Kiết tú', hung: 'Hung tú', binh: 'Bình tú' },
     tietKhi: 'Tiết khí',
     hoangDao: 'Hoàng đạo',
     hacDao: 'Hắc đạo',
@@ -101,6 +103,7 @@ export const vi = {
   chi: (c: number): string => CHI[c],
   than: (t: number): string => THAN[t],
   truc: (t: number): string => TRUC[t],
+  sao28: (s: number): string => SAO_28[s],
   hanh: (h: number): string => NGU_HANH[h],
   tietKhi: (_index: number, ten: string): string => ten,
 
@@ -122,6 +125,14 @@ export const vi = {
         return `Tam nương (mùng ${l.ngayAm} âm)`
       case 'nguyetKy':
         return `Nguyệt kỵ (mùng ${l.ngayAm} âm)`
+      case 'thoTu':
+        return `Ngày ${CHI[l.chiNgay]} là ngày Thọ tử của tháng ${l.thangAm} âm`
+      case 'satChu':
+        return `Ngày ${CHI[l.chiNgay]} là ngày Sát chủ của tháng ${l.thangAm} âm`
+      case 'saoTot':
+        return `Sao ${SAO_28[l.sao]} hợp việc ${viec(l.viec).toLowerCase()}`
+      case 'saoXau':
+        return `Sao ${SAO_28[l.sao]} kỵ việc ${viec(l.viec).toLowerCase()}`
       case 'hoangDao':
         return `Hoàng đạo ${THAN[l.than]}`
       case 'hacDao':

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   amSangDuong, CHI, chamDiemKhoang, cungHoangOc, DANH_SACH_VIEC, duongSangAm, jdFromDate, kimLau,
-  namTamTai, tenCanChi, canChiNgay, thongTinNgay, thongTinTuoi, TRUC, xepHang, congNgay, type Ngay,
+  namTamTai, tenCanChi, canChiNgay, thongTinNgay, thongTinTuoi, TRUC, xepHang, congNgay, SAO_28, loaiSao28, type Ngay,
 } from '..'
 
 const N = (d: number, m: number, y: number): Ngay => ({ d, m, y })
@@ -83,6 +83,33 @@ describe('Tầng 2 – Hoàng đạo, Trực, tuổi', () => {
     expect(namTamTai(1).map((c) => CHI[c])).toEqual(['Hợi', 'Tý', 'Sửu'])
   })
 
+  it('Nhị thập bát tú: đối chiếu lịch công khai', () => {
+    const sao = (n: Ngay) => SAO_28[thongTinNgay(n).sao28]
+    expect(sao(N(1, 1, 2000))).toBe('Vị')
+    expect(sao(N(15, 6, 2026))).toBe('Tất')
+    expect(sao(N(8, 11, 2026))).toBe('Tinh')
+    expect(sao(N(9, 11, 2026))).toBe('Trương')
+    expect(sao(N(5, 12, 2026))).toBe('Liễu')
+    expect(sao(N(21, 9, 2380))).toBe('Tinh')
+  })
+
+  it('Nhị thập bát tú: 11 kiết, 11 hung, 6 bình', () => {
+    const ten = (l: string) => SAO_28.filter((_, i) => loaiSao28(i) === l)
+    expect(ten('kiet')).toEqual(['Phòng', 'Vĩ', 'Cơ', 'Đẩu', 'Thất', 'Bích', 'Lâu', 'Vị', 'Tất', 'Trương', 'Chẩn'])
+    expect(ten('binh')).toEqual(['Giác', 'Nguy', 'Khuê', 'Sâm', 'Tỉnh', 'Tinh'])
+    expect(ten('hung')).toEqual(['Cang', 'Đê', 'Tâm', 'Ngưu', 'Nữ', 'Hư', 'Mão', 'Chủy', 'Quỷ', 'Liễu', 'Dực'])
+  })
+
+  it('Thọ tử và Sát chủ: đối chiếu lịch công khai', () => {
+    const ngayCo = (tu: Ngay, soNgay: number, k: 'thoTu' | 'satChu') =>
+      Array.from({ length: soNgay }, (_, i) => thongTinNgay(congNgay(tu, i)))
+        .filter((t) => t[k])
+        .map((t) => iso(t.duong))
+    expect(ngayCo(N(9, 11, 2026), 27, 'thoTu')).toEqual(['2026-11-18', '2026-11-30'])
+    expect(ngayCo(N(9, 11, 2026), 27, 'satChu')).toEqual(['2026-11-19', '2026-12-01'])
+    expect(thongTinNgay(N(15, 6, 2026)).satChu).toBe(true)
+  })
+
   it('Kim Lâu và Hoang Ốc theo tuổi mụ', () => {
     expect(kimLau(24)).toBe('Kim Lâu Tử') // 24 % 9 = 6
     expect(kimLau(26)).toBe('Kim Lâu Lục Súc') // 26 % 9 = 8
@@ -108,8 +135,41 @@ describe('Tầng 3 – chấm điểm cho Quý Mùi mua vàng (8/11 – 31/12/20
     expect(sao).toEqual(['2026-11-17', '2026-11-29', '2026-12-12', '2026-12-24', '2026-12-25'])
   })
 
-  it('12/12/2026 đứng đầu, 29/12 Đinh Sửu bị loại vì thiên khắc địa xung', () => {
-    expect(iso(xepHang(ds)[0].ngay.duong)).toBe('2026-12-12')
+  it('7/12/2026 đứng đầu nhờ sao Trương, 12/12 tụt vì sao Đê', () => {
+    expect(iso(xepHang(ds)[0].ngay.duong)).toBe('2026-12-07')
+    expect(byIso.get('2026-12-07')!.diem).toBe(5)
+    expect(byIso.get('2026-12-07')!.tot.map((l) => l.ma)).toContain('saoTot')
+    expect(byIso.get('2026-12-12')!.diem).toBe(3.5)
+    expect(byIso.get('2026-12-12')!.xau.map((l) => l.ma)).toContain('saoXau')
+  })
+
+  it('danh sách sao theo việc hợp lệ: đúng tên, không trùng giữa tốt và xấu', () => {
+    for (const v of DANH_SACH_VIEC) {
+      for (const s of [...v.saoTot, ...v.saoXau]) expect(SAO_28).toContain(s)
+      expect(v.saoTot.filter((s) => v.saoXau.includes(s))).toEqual([])
+    }
+  })
+
+  it('cùng một sao cho điểm khác nhau tùy việc', () => {
+    const diemSao = (id: string, n: Ngay) => {
+      const v = DANH_SACH_VIEC.find((x) => x.id === id)!
+      const k = chamDiemKhoang(n, 1, tuoi, v, 'nam')[0]
+      return [...k.tot, ...k.xau].filter((l) => l.ma === 'saoTot' || l.ma === 'saoXau').map((l) => l.diem)
+    }
+    // 29/11/2026 sao Mão: hung tú nhưng lịch ghi tốt cho xây dựng, kỵ cưới gả
+    expect(diemSao('dong-tho', N(29, 11, 2026))).toEqual([1])
+    expect(diemSao('cuoi-hoi', N(29, 11, 2026))).toEqual([-1])
+    // 18/11/2026 sao Cơ: kiết tú, lịch không nói đến cưới gả
+    expect(diemSao('cuoi-hoi', N(18, 11, 2026))).toEqual([])
+    expect(diemSao('mua-vang', N(18, 11, 2026))).toEqual([1])
+  })
+
+  it('ngày Thọ tử và Sát chủ bị loại', () => {
+    expect(byIso.get('2026-11-18')!.loai!.map((l) => l.ma)).toContain('thoTu')
+    expect(byIso.get('2026-11-19')!.loai!.map((l) => l.ma)).toContain('satChu')
+  })
+
+  it('29/12 Đinh Sửu bị loại vì thiên khắc địa xung', () => {
     expect(byIso.get('2026-12-29')!.loai![0].ma).toBe('thienKhacDiaXung')
     expect(byIso.get('2026-11-11')!.loai).not.toBeNull() // Kỷ Sửu xung + Tam nương
   })

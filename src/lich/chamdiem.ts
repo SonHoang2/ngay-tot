@@ -1,6 +1,6 @@
 /** Tầng 3 – chấm điểm ngày theo tuổi và việc. Quy tắc nằm trong quytac/viec.json. */
 import { quanHeHanh, type NapAm, type QuanHeHanh } from './canchi'
-import { thongTinNgay, TRUC, type ThongTinNgay, type TuyChon } from './ngay'
+import { SAO_28, thongTinNgay, TRUC, type ThongTinNgay, type TuyChon } from './ngay'
 import { jdn, jdToDate, type Ngay } from './thienvan'
 import {
   canHop, canXung, cungHoangOc, kimLau, lucHai, lucHop, lucPha, lucXung, tamHop, tuoiMu, tuongHinh,
@@ -15,6 +15,9 @@ export interface Viec {
   ten: string
   trucTot: string[]
   trucXau: string[]
+  /** Sao trong Nhị thập bát tú hợp / kỵ việc này. Sao không có trong hai danh sách thì 0 điểm. */
+  saoTot: string[]
+  saoXau: string[]
   xetNam: XetNam[]
 }
 
@@ -29,6 +32,8 @@ export type NoiDungLyDo =
   | { ma: 'thienKhacDiaXung'; canNgay: number; chiNgay: number }
   | { ma: 'xungTuoi'; chiNgay: number; chiTuoi: number }
   | { ma: 'tamNuong' | 'nguyetKy'; ngayAm: number }
+  | { ma: 'thoTu' | 'satChu'; chiNgay: number; thangAm: number }
+  | { ma: 'saoTot' | 'saoXau'; sao: number; viec: string }
   | { ma: 'hoangDao' | 'hacDao'; than: number }
   | { ma: 'trucTot' | 'trucXau'; truc: number; viec: string }
   | { ma: 'lucHop' | 'tamHop' | 'lucHai' | 'lucPha' | 'tuongHinh'; chiNgay: number; chiTuoi: number }
@@ -80,6 +85,8 @@ export function chamDiemNgay(
   else if (xung && L.xungTuoi) loai.push({ ma: 'xungTuoi', ...chi })
   if (ngay.tamNuong && L.tamNuong) loai.push({ ma: 'tamNuong', ngayAm: ngay.am.ngay })
   if (ngay.nguyetKy && L.nguyetKy) loai.push({ ma: 'nguyetKy', ngayAm: ngay.am.ngay })
+  if (ngay.thoTu && L.thoTu) loai.push({ ma: 'thoTu', chiNgay: chiN, thangAm: ngay.am.thang })
+  if (ngay.satChu && L.satChu) loai.push({ ma: 'satChu', chiNgay: chiN, thangAm: ngay.am.thang })
 
   // --- Hoàng đạo / Hắc đạo ---
   if (ngay.hoangDao) them(D.hoangDao, { ma: 'hoangDao', than: ngay.than })
@@ -89,6 +96,11 @@ export function chamDiemNgay(
   const tenTruc = TRUC[ngay.truc]
   if (viec.trucTot.includes(tenTruc)) them(D.trucTot, { ma: 'trucTot', truc: ngay.truc, viec: viec.id })
   else if (viec.trucXau.includes(tenTruc)) them(D.trucXau, { ma: 'trucXau', truc: ngay.truc, viec: viec.id })
+
+  // --- Nhị thập bát tú ---
+  const tenSao = SAO_28[ngay.sao28]
+  if (viec.saoTot.includes(tenSao)) them(D.saoTot, { ma: 'saoTot', sao: ngay.sao28, viec: viec.id })
+  else if (viec.saoXau.includes(tenSao)) them(D.saoXau, { ma: 'saoXau', sao: ngay.sao28, viec: viec.id })
 
   // --- Quan hệ địa chi ---
   if (lucHop(chiN, chiT)) them(D.lucHop, { ma: 'lucHop', ...chi })

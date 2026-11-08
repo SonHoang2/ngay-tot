@@ -19,6 +19,33 @@ export type TenTruc = (typeof TRUC)[number]
 export const TAM_NUONG = new Set([3, 7, 13, 18, 22, 27])
 export const NGUYET_KY = new Set([5, 14, 23])
 
+export const SAO_28 = [
+  'Giác', 'Cang', 'Đê', 'Phòng', 'Tâm', 'Vĩ', 'Cơ',
+  'Đẩu', 'Ngưu', 'Nữ', 'Hư', 'Nguy', 'Thất', 'Bích',
+  'Khuê', 'Lâu', 'Vị', 'Mão', 'Tất', 'Chủy', 'Sâm',
+  'Tỉnh', 'Quỷ', 'Liễu', 'Tinh', 'Trương', 'Dực', 'Chẩn',
+] as const
+
+export type LoaiSao28 = 'kiet' | 'hung' | 'binh'
+
+const SAO_KIET = new Set([3, 5, 6, 7, 12, 13, 15, 16, 18, 25, 27])
+const SAO_BINH = new Set([0, 11, 14, 20, 21, 24])
+
+/** Kiết / hung / bình của sao (chỉ số trong SAO_28). */
+export const loaiSao28 = (sao: number): LoaiSao28 =>
+  SAO_KIET.has(sao) ? 'kiet' : SAO_BINH.has(sao) ? 'binh' : 'hung'
+
+/** Nhị thập bát tú trực ngày: vòng 28 ngày liên tục, mốc 1/1/2000 (JDN 2451545) là sao Vị. */
+export const sao28 = (jd: number) => (jd + 11) % 28
+
+/** Chi của ngày Thọ tử theo tháng âm 1..12 (Tuất, Thìn, Hợi, Tỵ, Tý, Ngọ, Sửu, Mùi, Dần, Thân, Mão, Dậu). */
+const CHI_THO_TU = [10, 4, 11, 5, 0, 6, 1, 7, 2, 8, 3, 9]
+/** Chi của ngày Sát chủ theo tháng âm 1..12 (Tỵ, Tý, Mùi, Mão, Thân, Tuất, Sửu, Hợi, Ngọ, Dậu, Dần, Thìn). */
+const CHI_SAT_CHU = [5, 0, 7, 3, 8, 10, 1, 11, 6, 9, 2, 4]
+
+export const laThoTu = (thangAm: number, chiNgay: number) => CHI_THO_TU[thangAm - 1] === chiNgay
+export const laSatChu = (thangAm: number, chiNgay: number) => CHI_SAT_CHU[thangAm - 1] === chiNgay
+
 /**
  * Vị thần trực (0..11, xem THAN) theo chi tháng và chi ngày (hoặc chi ngày và chi giờ).
  * "Dần Thân gia Tý, Mão Dậu Dần, Thìn Tuất Thìn, Tỵ Hợi Ngọ, Ngọ Tý Thân, Sửu Mùi Tuất"
@@ -67,6 +94,10 @@ export interface ThongTinNgay {
   gioTot: GioTot[]
   tamNuong: boolean
   nguyetKy: boolean
+  /** Nhị thập bát tú (0..27, xem SAO_28). */
+  sao28: number
+  thoTu: boolean
+  satChu: boolean
 }
 
 export function thongTinNgay(duong: Ngay, tuyChon: TuyChon = {}): ThongTinNgay {
@@ -103,5 +134,8 @@ export function thongTinNgay(duong: Ngay, tuyChon: TuyChon = {}): ThongTinNgay {
     })),
     tamNuong: TAM_NUONG.has(am.ngay),
     nguyetKy: NGUYET_KY.has(am.ngay),
+    sao28: sao28(jd),
+    thoTu: laThoTu(am.thang, cc.chi),
+    satChu: laSatChu(am.thang, cc.chi),
   }
 }

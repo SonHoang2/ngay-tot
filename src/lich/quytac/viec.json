@@ -1,16 +1,20 @@
 {
-  "nguon": "Tổng hợp theo quy ước phổ biến của lịch vạn niên Việt Nam (Thập nhị Trực, Hoàng đạo, xung hợp tuổi, Kim Lâu, Hoang Ốc, Tam tai).",
+  "nguon": "Tổng hợp theo quy ước phổ biến của lịch vạn niên Việt Nam (Thập nhị Trực, Hoàng đạo, Nhị thập bát tú, Thọ tử, Sát chủ, xung hợp tuổi, Kim Lâu, Hoang Ốc, Tam tai).",
   "loaiNgay": {
     "thienKhacDiaXung": true,
     "xungTuoi": true,
     "tamNuong": true,
-    "nguyetKy": true
+    "nguyetKy": true,
+    "thoTu": true,
+    "satChu": true
   },
   "diem": {
     "hoangDao": 2,
     "hacDao": -1,
     "trucTot": 2,
     "trucXau": -2,
+    "saoTot": 1,
+    "saoXau": -1,
     "lucHop": 1,
     "tamHop": 1,
     "canHop": 0.5,
@@ -33,6 +37,8 @@
     {
       "id": "mua-vang",
       "ten": "Mua vàng / cầu tài",
+      "saoTot": ["Giác", "Phòng", "Vĩ", "Cơ", "Đẩu", "Thất", "Bích", "Lâu", "Vị", "Tất", "Trương", "Chẩn"],
+      "saoXau": ["Đê", "Tâm", "Ngưu", "Nữ", "Hư", "Mão", "Chủy", "Quỷ", "Liễu"],
       "trucTot": ["Mãn", "Định", "Thành", "Thu", "Khai"],
       "trucXau": ["Phá", "Nguy", "Bế"],
       "xetNam": []
@@ -40,6 +46,8 @@
     {
       "id": "khai-truong",
       "ten": "Khai trương",
+      "saoTot": ["Giác", "Phòng", "Vĩ", "Cơ", "Đẩu", "Thất", "Bích", "Lâu", "Vị", "Tất", "Trương", "Chẩn"],
+      "saoXau": ["Đê", "Tâm", "Ngưu", "Nữ", "Hư", "Khuê", "Mão", "Chủy", "Quỷ", "Liễu"],
       "trucTot": ["Mãn", "Thành", "Khai"],
       "trucXau": ["Phá", "Nguy", "Bế", "Thu"],
       "xetNam": ["tamTai"]
@@ -47,6 +55,8 @@
     {
       "id": "xuat-hanh",
       "ten": "Xuất hành",
+      "saoTot": ["Phòng", "Vĩ", "Cơ", "Bích", "Tất", "Chẩn"],
+      "saoXau": ["Đê", "Tâm", "Ngưu", "Hư", "Mão", "Chủy", "Liễu"],
       "trucTot": ["Kiến", "Mãn", "Thành", "Khai"],
       "trucXau": ["Phá", "Nguy", "Bế", "Định", "Chấp"],
       "xetNam": []
@@ -54,6 +64,8 @@
     {
       "id": "ky-hop-dong",
       "ten": "Ký hợp đồng",
+      "saoTot": ["Giác", "Phòng", "Vĩ", "Cơ", "Đẩu", "Thất", "Bích", "Lâu", "Vị", "Tất", "Trương", "Chẩn"],
+      "saoXau": ["Đê", "Tâm", "Ngưu", "Nữ", "Hư", "Mão", "Chủy", "Quỷ", "Liễu"],
       "trucTot": ["Mãn", "Định", "Thành", "Khai"],
       "trucXau": ["Phá", "Nguy", "Bế"],
       "xetNam": []
@@ -61,6 +73,8 @@
     {
       "id": "cuoi-hoi",
       "ten": "Cưới hỏi",
+      "saoTot": ["Giác", "Phòng", "Vĩ", "Thất", "Bích", "Lâu", "Vị", "Tất", "Trương", "Chẩn"],
+      "saoXau": ["Cang", "Đê", "Tâm", "Ngưu", "Hư", "Mão", "Chủy", "Sâm", "Quỷ", "Liễu", "Tinh", "Dực"],
       "trucTot": ["Định", "Thành", "Khai"],
       "trucXau": ["Phá", "Nguy", "Bế", "Trừ"],
       "xetNam": ["kimLauNu", "tamTai"]
@@ -68,6 +82,8 @@
     {
       "id": "dong-tho",
       "ten": "Động thổ / làm nhà",
+      "saoTot": ["Giác", "Phòng", "Vĩ", "Cơ", "Đẩu", "Thất", "Bích", "Khuê", "Lâu", "Vị", "Mão", "Tất", "Sâm", "Tỉnh", "Tinh", "Trương", "Chẩn"],
+      "saoXau": ["Cang", "Đê", "Tâm", "Ngưu", "Nữ", "Hư", "Nguy", "Chủy", "Quỷ", "Liễu", "Dực"],
       "trucTot": ["Bình", "Định", "Chấp", "Thành", "Khai"],
       "trucXau": ["Kiến", "Phá", "Nguy", "Bế"],
       "xetNam": ["kimLau", "hoangOc", "tamTai"]

@@ -1,4 +1,4 @@
-import type { KetQuaNgay, LyDo } from '../lich'
+import { loaiSao28, type KetQuaNgay, type LyDo } from '../lich'
 import { useNgonNgu } from '../i18n'
 import { fmtDiem, MAU_MUC_DO, mucDo } from './dinhdang'
 
@@ -27,6 +27,7 @@ export function ChiTietNgay({ k }: { k: KetQuaNgay }) {
         <O nhan={c.thangNam} giaTri={`${t.canChi(n.canChiThangTiet)} / ${t.canChi(n.canChiNam)}`} />
         <O nhan={c.thanTruc} giaTri={`${t.than(n.than)} · ${n.hoangDao ? c.hoangDao : c.hacDao}`} />
         <O nhan={c.truc} giaTri={t.truc(n.truc)} />
+        <O nhan={c.sao28} giaTri={`${t.sao28(n.sao28)} · ${c.loaiSao[loaiSao28(n.sao28)]}`} />
         <O nhan={c.tietKhi} giaTri={n.tiet.batDau ? c.giaoTiet(tiet) : tiet} />
       </dl>
 

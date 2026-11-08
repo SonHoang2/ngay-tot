@@ -1,4 +1,4 @@
-import { CAN, CHI, tenCanChi, THAN, TRUC, type Ngay, type NgayAm, type NoiDungLyDo, type QuanHeHanh } from '../lich'
+import { CAN, CHI, SAO_28, tenCanChi, THAN, TRUC, type Ngay, type NgayAm, type NoiDungLyDo, type QuanHeHanh } from '../lich'
 import type { TuDien } from './vi'
 
 const TEN_VIEC: Record<string, string> = {
@@ -69,7 +69,7 @@ export const en: TuDien = {
   ngayTotNhat: (v: string) => `Best days for ${viec(v).toLowerCase()}`,
   luuY: 'Results are for reference according to folk custom only, not financial or investment advice.',
   nguon:
-    'Compiled from common conventions of the Vietnamese perpetual calendar (12 Trực, Hoàng đạo, age clashes and harmonies, Kim Lâu, Hoang Ốc, Tam tai).',
+    'Compiled from common conventions of the Vietnamese perpetual calendar (12 Trực, Hoàng đạo, the 28 Mansions, Thọ tử, Sát chủ, age clashes and harmonies, Kim Lâu, Hoang Ốc, Tam tai).',
 
   form: {
     ngaySinh: 'Date of birth (Gregorian)',
@@ -97,6 +97,8 @@ export const en: TuDien = {
     thangNam: 'Month / Year',
     thanTruc: 'Day spirit',
     truc: 'Trực (day officer)',
+    sao28: '28 Mansions (Nhị thập bát tú)',
+    loaiSao: { kiet: 'auspicious', hung: 'inauspicious', binh: 'neutral' },
     tietKhi: 'Solar term',
     hoangDao: 'auspicious – Hoàng đạo',
     hacDao: 'inauspicious – Hắc đạo',
@@ -124,6 +126,7 @@ export const en: TuDien = {
   chi,
   than,
   truc,
+  sao28: (s: number) => SAO_28[s],
   hanh,
   tietKhi: (i: number, ten: string) => `${ten} (${TIET_KHI_EN[i]})`,
 
@@ -145,6 +148,14 @@ export const en: TuDien = {
         return `Tam Nương day (lunar day ${l.ngayAm})`
       case 'nguyetKy':
         return `Nguyệt Kỵ day (lunar day ${l.ngayAm})`
+      case 'thoTu':
+        return `${chi(l.chiNgay)} day is a Thọ tử day in lunar month ${l.thangAm}`
+      case 'satChu':
+        return `${chi(l.chiNgay)} day is a Sát chủ day in lunar month ${l.thangAm}`
+      case 'saoTot':
+        return `Mansion ${SAO_28[l.sao]} suits ${viec(l.viec).toLowerCase()}`
+      case 'saoXau':
+        return `Mansion ${SAO_28[l.sao]} is unfavorable for ${viec(l.viec).toLowerCase()}`
       case 'hoangDao':
         return `Auspicious day of ${than(l.than)}`
       case 'hacDao':
